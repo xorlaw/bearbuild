@@ -53,7 +53,7 @@ fn validate(cfg: &Config) -> Result<(), BearError> {
         return Err(BearError::Config("project.name must not be empty".into()));
     }
 
-    if cfg.project.version.is_empty {
+    if cfg.project.version.is_empty() {
         return Err(BearError::Config("project.version must not be empty".into()));
     }
     
