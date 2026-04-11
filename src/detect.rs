@@ -57,7 +57,35 @@ fn compiler_version(name: &str) -> Result<String, BearError> {
 }
 
 
+fn pkg_config(pkgs: &[String]) -> Result<(Vec<String>, Vec<String>), BearError> {
+    let cflags  = run_pkg_config(pkgs, "--cflags")?;
+    let libs    = run_pkg_config(pkgs, "--libs")?;
+    Ok((cflags, libs))
+}
 
+fn run_pkg_config(pkgs : &[String], flag: &str) -> Result<Vec<String>, BearError> {
+    let out = Command::new("pkg-config")
+        .arg(flag)
+        .args(pkgs)
+        .output()
+        .map_error(|_| BearError::Detect("pkg-config not found, is it installed?".into()))?;
+
+    if !out.status.success() {
+        let stderr = String::from_utf8_lossy(&out.stderr);
+        return Err(BearError::Detect(format!("pkg-config failed: {}", stderr.trim())));
+    }
+
+    let stdout = String::from_utf8_lossy(&out.stdout);
+
+    let flags = stdout
+        .split_whitespace()
+        .map(|s| s.to_string())
+        .collect();
+    
+    Ok(flags)
+}
+
+   
 
 
 
