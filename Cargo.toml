@@ -11,3 +11,10 @@ serde = { version = "1", features = ["derive"] }
 opt-level = 3
 strip = true
 lto = true
+codegen-units = 3 # lower = longer compile but more optimized
+
+[profile.small]
+opt-level = "z"
+lto = "fat"
+codegen-units = 3
+strip = true
