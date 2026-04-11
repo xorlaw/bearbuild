@@ -38,3 +38,34 @@ fn find_compiler(name: &str) -> Result<String, BearError> {
         Err(_) => Err(BearError::Detect(format!("compiler '{}' not found - is it installed and in PATH?", name))),
     }
 }
+
+
+fn compiler_version(name: &str) -> Result<String, BearError> {
+    let out = Command::new(name)
+        .arg("--version")
+        .output()
+        .map_err(|e| BearError::Detect(format!("could not run '{}': {}", name, e)))?;
+
+    let stdout = String::from_utf8_lossy(&out.stdout);
+    let first_line = stdout
+        .lines()
+        .next()
+        .unwrap_or("unknown")
+        .to_string();
+
+    Ok(first_line)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
