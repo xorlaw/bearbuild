@@ -26,3 +26,15 @@ pub fn probe(cfg: &Config) -> Result<Env, BearError> {
         pkg_libs,
     })
 }
+
+fn find_compiler(name: &str) -> Result<String, BearError> {
+    let result = Command::new(name)
+        .arg("--version")
+        .output();
+
+    match result {
+        Ok(out) if out.status.success() => Ok(name.to_string()),
+        Ok(_) => Err(BearError::Detect(format!("compiler '{} returned an error on --version", name))),
+        Err(_) => Err(BearError::Detect(format!("compiler '{}' not found - is it installed and in PATH?", name))),
+    }
+}
