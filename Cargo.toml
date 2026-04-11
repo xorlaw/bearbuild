@@ -18,3 +18,4 @@ opt-level = "z"
 lto = "fat"
 codegen-units = 3
 strip = true
+inherits = "release"
