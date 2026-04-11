@@ -15,7 +15,7 @@ fn main() {
 }
 
 fn run() -> Result<(), BearError> {
-    let cfg = config::load("project.toml")?;
+    let cfg = config::load("bear.toml")?;
     println!("bb: loaded project '{}'", cfg.project.name);
 
     let env = detect::probe(&cfg)?;
