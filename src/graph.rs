@@ -78,3 +78,16 @@ fn expand_glob(pattern: &str) -> Result<Vec<PathBuf>, BearError> {
 
     Ok(matches)
 }
+
+fn src_to_obj(src: &Path) -> PathBuf {
+    let flat: String = src.components()
+        .map(|c| c.as_os_str().to_string_lossy().into_owned())
+        .collect::<Vec<_>>()
+        .join("_")
+        .trim_end_matches(".c")
+        .to_string();
+
+    PathBuf::from(format!("build/{}..o", flat))
+}
+
+
