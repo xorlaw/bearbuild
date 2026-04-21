@@ -72,7 +72,7 @@ fn write_compile_edges(
     _env: &Env,
     graph: &BuildGraph,
     out: &mut String,
-) -> Resul<(), BearError> {
+) -> Result<(), BearError> {
     writeln!(out, "# compile").unwrap();
 
     for sf in &graph.sources {
