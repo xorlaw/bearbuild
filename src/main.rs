@@ -1,3 +1,5 @@
+// entry point
+
 mod config;
 mod detect;
 mod emit;
@@ -8,26 +10,28 @@ use error::BearError;
 use std::process;
 
 fn main() {
-    if let Err(e) = run() {
-        eprintln!("bb: error: {e}");
-        process::exit(1)
+    let args: Vec<String> = std::env::args().collect();
+
+    if args.len() > 1 {
+        match args[1].as_str() {
+            "--help" | "-h" => {
+                print_help();
+                process::exit(0);
+            }
+            "--version" | "-v" => {
+                println!("bearbuild {}", env!("CARGO_PKG_VERSION"));
+                process::exit(0);
+            }
+            unknown => {
+                eprintln!("bearbuild: unknown argument '{}' - try --help", unknown);
+            }
+        }
     }
-}
 
-fn run() -> Result<(), BearError> {
-    let cfg = config::load("bear.toml")?;
-    println!("bb: loaded project '{}'", cfg.project.name);
-
-    let env = detect::probe(&cfg)?;
-    println!("bb: compiler -> {}", env.compiler);
-
-    let graph = graph::build(&cfg)?;
-    println!("bb: found {} source file(s)", graph.sources.len());
-
-    emit::write(&cfg, &env, &graph)?;
-    println!("bb: wrote build.ninja");
-
-    Ok(())
+    if let Err(e) = run() {
+        eprintln!("bearbuild: error: {}", e);
+        process::exit(1);
+    }
 }
 
 
