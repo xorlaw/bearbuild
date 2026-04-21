@@ -67,5 +67,24 @@ fn write_rules(out: &mut String) {
     writeln!(out).unwrap();
 }
 
+fn write_compile_edges(
+    _cfg: &Config,
+    _env: &Env,
+    graph: &BuildGraph,
+    out: &mut String,
+) -> Resul<(), BearError> {
+    writeln!(out, "# compile").unwrap();
+
+    for sf in &graph.sources {
+        let src = sf.src.display();
+        let obj = sf.obj.display();
+
+        writeln!(out, "build {}: cc {}", obj, src).unwrap();
+    }
+
+    writeln!(out).unwrap();
+    Ok(())
+}
+
 
 
