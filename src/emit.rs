@@ -86,5 +86,20 @@ fn write_compile_edges(
     Ok(())
 }
 
+fn write_link_edge(cfg: &Config, _env: &Env, graph: &BuildGraph, out: &mut String) {
+    writeln!(out, "# link").unwrap();
+
+    let objs: String = graph.objects
+        .iter()
+        .map(|o| o.display().to_string())
+        .collect::<Vec<_>>()
+        .join(" ");
+
+    writeln!(out, "build {}: link {}", cfg.output.binary, objs).unwrap();
+    writeln!(out).unwrap();
+
+    writeln!(out, "default {}", cfg.output.binary).unwrap();
+}
+
 
 
