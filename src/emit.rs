@@ -55,5 +55,17 @@ fn write_header(cfg: &Config, env: &Env, out: &mut String) {
 }
 
 
+fn write_rules(out: &mut String) {
+    writeln!(out, "rule cc").unwrap();
+    writeln!(out, " command = $cc $cflags -MMD -MF $out.d -c $in -o $out").unwrap();
+    writeln!(out, " depfile = $out.d").unwrap();
+    writeln!(out, " deps = gcc").unwrap();
+    writeln!(out).unwrap();
+
+    writeln!(out, "rule link").unwrap();
+    writeln!(out, " command = $cc $in $libs -o #out").unwrap();
+    writeln!(out).unwrap();
+}
+
 
 
