@@ -15,6 +15,7 @@ pub struct Project {
     pub version: String,
 }
 
+#[derive(Debug, Deserialize)]
 pub struct Build {
     pub compiler:   String,
     pub std:        String,
