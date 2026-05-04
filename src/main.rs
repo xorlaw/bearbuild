@@ -59,13 +59,17 @@ fn run() -> Result<(), BearError> {
 
     println!("bearbuild: probing environment...");
     let env = detect::probe(&cfg)?;
+    println!("bearbuild: compiler → {}", env.compiler_ver);
+
+    println!("bearbuild: resolving sources...");
+    let build_graph = graph::build(&cfg)?;
     println!("bearbuild: {} source file(s) found", build_graph.sources.len());
 
     println!("bearbuild: writing build.ninja...");
-    emit::write(&cfg, &env, &graph)?;
+    emit::write(&cfg, &env, &build_graph)?;
 
     println!(
-        "bearbuild: finished writing build.ninja for '{}'.",
+        "bearbuild: done. run 'ninja' to build '{}'.",
         cfg.output.binary
     );
     Ok(())
