@@ -87,7 +87,7 @@ fn src_to_obj(src: &Path) -> PathBuf {
         .trim_end_matches(".c")
         .to_string();
 
-    PathBuf::from(format!("build/{}..o", flat))
+    PathBuf::from(format!("build/{}.o", flat))
 }
 
 
