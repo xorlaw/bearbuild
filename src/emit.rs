@@ -63,7 +63,7 @@ fn write_rules(out: &mut String) {
     writeln!(out).unwrap();
 
     writeln!(out, "rule link").unwrap();
-    writeln!(out, " command = $cc $in $libs -o #out").unwrap();
+    writeln!(out, " command = $cc $in $libs -o $out").unwrap();
     writeln!(out).unwrap();
 }
 
