@@ -61,7 +61,7 @@ fn expand_glob(pattern: &str) -> Result<Vec<PathBuf>, BearError> {
     let entries = std::fs::read_dir(dir).map_err(|e| BearError::Graph(format!("could not read directory '{}': {}", dir.display(), e)))?;
 
     for entry in entries {
-        let entry = entry.map_err(|e|| BearError::Graph(format!("error reading directory entry: {}", e)))?;
+        let entry = entry.map_err(|e| BearError::Graph(format!("error reading directory entry: {}", e)))?;
 
         let fname = entry.file_name();
         let fname = fname.to_string_lossy();
