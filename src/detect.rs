@@ -68,7 +68,7 @@ fn run_pkg_config(pkgs : &[String], flag: &str) -> Result<Vec<String>, BearError
         .arg(flag)
         .args(pkgs)
         .output()
-        .map_error(|_| BearError::Detect("pkg-config not found, is it installed?".into()))?;
+        .map_err(|_| BearError::Detect("pkg-config not found, is it installed?".into()))?;
 
     if !out.status.success() {
         let stderr = String::from_utf8_lossy(&out.stderr);
