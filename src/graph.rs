@@ -66,8 +66,8 @@ fn expand_glob(pattern: &str) -> Result<Vec<PathBuf>, BearError> {
         let fname = entry.file_name();
         let fname = fname.to_string_lossy();
 
-        if fname.starts_with(prefix.as_ref())
-            && fname.ends_with(suffix.as_ref())
+        if fname.starts_with(prefix)
+            && fname.ends_with(suffix)
             && fname.len() > prefix.len() + suffix.len()
         {
             matches.push(entry.path());
