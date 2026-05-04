@@ -34,4 +34,23 @@ fn main() {
     }
 }
 
+fn print_help() {
+    println!(
+        "bearbuild v{ver} - a modern and simple build system
+
+        USAGE:
+            bearbuild [OPTIONS]
+
+        OPTIONS:
+            -h, --help      display this help message
+            -v, --version   print the current version
+
+        BEHAVIOUR:
+            Reads bear.toml in the current directory, probes the environment and writes a build.ninja file to be run with ninja or ninja - compatible tools such as samurai.
+
+        An example bear.toml is available on the official Github repository.",
+        ver = env!("CARGO_PKG_VERSION")
+    );
+}
+
 
