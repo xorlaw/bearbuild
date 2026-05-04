@@ -53,4 +53,22 @@ fn print_help() {
     );
 }
 
+fn run() -> Result<(), BearError> {
+    println!("bearbuild: loading bear.toml...");
+    let cfg = config::load("bear.toml")?;
+
+    println!("bearbuild: probing environment...");
+    let env = detect::probe(&cfg)?;
+    println!("bearbuild: {} source file(s) found", graph.sources.len());
+
+    println!("bearbuild: writing build.ninja...");
+    emit::write(&cfg, &env, &graph)?;
+
+    println!(
+        "bearbuild: finished writing build.ninja for '{}'.",
+        cfg.output.binary
+    );
+    Ok(())
+}
+
 
